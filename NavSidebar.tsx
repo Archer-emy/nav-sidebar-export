@@ -139,6 +139,10 @@ export default function NavSidebar() {
 }
 
 const NAV_CSS = `
+/* 苹方字体(可选):把 public/fonts 下的 woff2 一起拷到你项目的 public/fonts 即可生效;
+   没有这两个文件也没关系,会自动回退到系统中文字体。 */
+@font-face { font-family:"PingFang SC"; src:url("/fonts/PingFang_SC-Regular.woff2") format("woff2"); font-weight:400; font-display:swap; }
+@font-face { font-family:"PingFang SC"; src:url("/fonts/PingFang_SC-Medium.woff2") format("woff2"); font-weight:500; font-display:swap; }
 .kimi-sidebar {
   width: 260px; background: #fff; border-right: 1px solid rgba(0,0,0,.06);
   padding: 14px 12px; display: flex; flex-direction: column; gap: 4px;

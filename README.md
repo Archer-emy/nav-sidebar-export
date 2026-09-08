@@ -1,6 +1,13 @@
 # nav-sidebar-export
 
-导航栏(不含"历史对话")独立导出 — React 19 + Vite + Tailwind CSS v4,含 5 个逐图标的语义化 hover 动画。
+导航栏(不含"历史对话")独立导出 — **React 19 + Vite 8 + Tailwind CSS 4**,页面主体单个 `App`,含 Figma 导出组件源码、字体和图片资源,以及 5 个逐图标的语义化 hover 动画。
+
+## 资源清单
+
+- **组件源码**:`src/App.tsx`(Figma 导出重建的导航栏 + 5 个图标组件)
+- **单文件版**:`NavSidebar.tsx`(复制即用,自带 `<style>`,无需引 CSS)
+- **字体**:`public/fonts/PingFang_SC-{Regular,Medium}.woff2`(已通过 `@font-face` 打包,跨电脑字体统一)
+- **图片资源**:`public/icons/*.{svg,png}` 与 `assets/icons/*`(5 个图标的矢量 + 512px 透明位图)
 
 ## 运行
 
