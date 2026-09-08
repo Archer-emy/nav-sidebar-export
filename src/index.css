@@ -1,26 +1,20 @@
 @import "tailwindcss";
 
-/* Figma 导出字体:苹方(PingFang SC),打包在 public/fonts 内,跨电脑字体统一 */
+/* Figma 导出字体:苹方(PingFang SC),打包在 public/fonts 内。
+   字体名与 Figma 导出 className(font-['PingFang_SC:Regular']) 保持一致。 */
 @font-face {
-  font-family: "PingFang SC";
+  font-family: "PingFang SC:Regular";
   src: url("/fonts/PingFang_SC-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "PingFang SC";
+  font-family: "PingFang SC:Medium";
   src: url("/fonts/PingFang_SC-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
-}
-
-:root {
-  --ink: #242529;
-  --muted: #8a8f99;
-  --hover-bg: #f3f4f6;
-  --sidebar-bg: #ffffff;
 }
 
 html,
@@ -28,102 +22,32 @@ body,
 #root {
   height: 100%;
 }
-
 body {
   margin: 0;
-  display: flex;
-  background: linear-gradient(160deg, #eef1f8 0%, #f6f4fb 100%);
-  font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Microsoft YaHei", Roboto, Helvetica, Arial, sans-serif;
-  color: var(--ink);
 }
 
-/* ── Sidebar shell ─────────────────────────────────────────────── */
-.sidebar {
-  width: 260px;
-  background: var(--sidebar-bg);
-  border-right: 1px solid rgb(0 0 0 / 6%);
-  padding: 14px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-height: 100vh;
-  box-sizing: border-box;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 6px 9px 14px;
-}
-
-.brand-logo {
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #3855d5 0%, #6b8bff 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.brand-name {
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-.brand-collapse {
-  margin-left: auto;
-  color: var(--muted);
-  display: flex;
-}
-
+/* 导航行交互(不改变 Figma 布局,仅加指针/悬浮底色/聚焦环) */
 .nav-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 40px;
-  padding: 0 9px;
-  border-radius: 8px;
   cursor: pointer;
-  user-select: none;
-  color: var(--ink);
+  outline: none;
   transition: background-color 160ms ease;
 }
-
 .nav-item:hover {
-  background: var(--hover-bg);
+  background: #eceef1;
 }
-
 .nav-item:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px rgb(56 85 213 / 42%);
+  box-shadow: inset 0 0 0 2px rgb(56 85 213 / 42%);
 }
 
-.nav-label {
-  font-size: 14px;
-  line-height: 14px;
-}
-
-/* ── Icon wrapper ──────────────────────────────────────────────── */
+/* ── 图标 hover 动画 ────────────────────────────────────────────────────── */
 .figma-nav-icon {
-  position: relative;
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
   transform-origin: center;
   --kimi-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
-
 .figma-nav-icon svg {
   display: block;
 }
-
-/* Fallback transitions so leaving mid-gesture eases back instead of snapping.
- * The keyframe animation overrides these while it is actually running. */
+/* 中途移开时平滑回到静止(动画运行时会覆盖该 transition) */
 .figma-nav-icon,
 .figma-nav-icon svg *,
 .figma-nav-icon > div {
@@ -131,12 +55,9 @@ body {
     translate 260ms var(--kimi-smooth), opacity 260ms var(--kimi-smooth);
 }
 
-/* 0 · 开启新对话 — a new message pops up with a playful tilt. */
 .nav-item[data-nav-index="0"]:hover .figma-nav-icon {
   animation: kimi-popup 640ms var(--kimi-smooth) 1;
 }
-
-/* 1 · 我的收藏 — the card's text lines write themselves in, then a soft settle. */
 .nav-item[data-nav-index="1"]:hover .figma-nav-icon {
   animation: kimi-settle 560ms var(--kimi-smooth) 1;
 }
@@ -148,16 +69,12 @@ body {
   transform-box: view-box;
   animation: kimi-write 520ms var(--kimi-smooth) 90ms 1 both;
 }
-
-/* 2 · 能力库 — two books lift and fan outward, like browsing a shelf. */
 .nav-item[data-nav-index="2"]:hover .figma-nav-icon svg rect:nth-of-type(2) {
   animation: kimi-book-right 600ms var(--kimi-smooth) 1;
 }
 .nav-item[data-nav-index="2"]:hover .figma-nav-icon svg rect:nth-of-type(1) {
   animation: kimi-book-left 600ms var(--kimi-smooth) 70ms 1 both;
 }
-
-/* 3 · 自动化任务 — the alarm rings: hands sweep a full turn, bells shake. */
 .nav-item[data-nav-index="3"]:hover .figma-nav-icon svg path:last-of-type {
   transform-box: view-box;
   transform-origin: 8px 8px;
@@ -167,8 +84,6 @@ body {
 .nav-item[data-nav-index="3"]:hover .figma-nav-icon svg rect:nth-of-type(2) {
   animation: kimi-ring 750ms ease-in-out 1;
 }
-
-/* 4 · 我的记忆 — the head nods while the whole icon gives a soft recall pulse. */
 .nav-item[data-nav-index="4"]:hover .figma-nav-icon {
   animation: kimi-recall 780ms ease-in-out 1;
 }
@@ -176,123 +91,55 @@ body {
   animation: kimi-nod 780ms ease-in-out 1;
 }
 
-/* ── Keyframes (every gesture opens and closes on identity = crisp at rest) ── */
 @keyframes kimi-popup {
-  0% {
-    transform: translateY(0) scale(1) rotate(0deg);
-  }
-  22% {
-    transform: translateY(1px) scale(0.96) rotate(0deg);
-  }
-  55% {
-    transform: translateY(-1.5px) scale(1.13) rotate(-4deg);
-  }
-  78% {
-    transform: translateY(-0.5px) scale(1.04) rotate(3deg);
-  }
-  100% {
-    transform: translateY(0) scale(1) rotate(0deg);
-  }
+  0% { transform: translateY(0) scale(1) rotate(0deg); }
+  22% { transform: translateY(1px) scale(0.96) rotate(0deg); }
+  55% { transform: translateY(-1.5px) scale(1.13) rotate(-4deg); }
+  78% { transform: translateY(-0.5px) scale(1.04) rotate(3deg); }
+  100% { transform: translateY(0) scale(1) rotate(0deg); }
 }
 @keyframes kimi-write {
-  0% {
-    transform: translateX(-2.6px);
-    opacity: 0.2;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
+  0% { transform: translateX(-2.6px); opacity: 0.2; }
+  100% { transform: translateX(0); opacity: 1; }
 }
 @keyframes kimi-settle {
-  0% {
-    transform: scale(1);
-  }
-  55% {
-    transform: scale(1.07);
-  }
-  100% {
-    transform: scale(1);
-  }
+  0% { transform: scale(1); }
+  55% { transform: scale(1.07); }
+  100% { transform: scale(1); }
 }
 @keyframes kimi-book-right {
-  0% {
-    translate: 0 0;
-  }
-  45% {
-    translate: 1px -1.6px;
-  }
-  100% {
-    translate: 0 0;
-  }
+  0% { translate: 0 0; }
+  45% { translate: 1px -1.6px; }
+  100% { translate: 0 0; }
 }
 @keyframes kimi-book-left {
-  0% {
-    translate: 0 0;
-  }
-  45% {
-    translate: -1px -1px;
-  }
-  100% {
-    translate: 0 0;
-  }
+  0% { translate: 0 0; }
+  45% { translate: -1px -1px; }
+  100% { translate: 0 0; }
 }
 @keyframes kimi-sweep {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 @keyframes kimi-ring {
-  0%,
-  100% {
-    translate: 0 0;
-  }
-  15% {
-    translate: -0.5px 0;
-  }
-  30% {
-    translate: 0.5px 0;
-  }
-  45% {
-    translate: -0.4px 0;
-  }
-  60% {
-    translate: 0.4px 0;
-  }
-  75% {
-    translate: -0.25px 0;
-  }
+  0%, 100% { translate: 0 0; }
+  15% { translate: -0.5px 0; }
+  30% { translate: 0.5px 0; }
+  45% { translate: -0.4px 0; }
+  60% { translate: 0.4px 0; }
+  75% { translate: -0.25px 0; }
 }
 @keyframes kimi-recall {
-  0% {
-    transform: scale(1);
-  }
-  45% {
-    transform: scale(1.09);
-  }
-  100% {
-    transform: scale(1);
-  }
+  0% { transform: scale(1); }
+  45% { transform: scale(1.09); }
+  100% { transform: scale(1); }
 }
 @keyframes kimi-nod {
-  0% {
-    transform: translateY(0);
-  }
-  25% {
-    transform: translateY(1.3px);
-  }
-  50% {
-    transform: translateY(0);
-  }
-  75% {
-    transform: translateY(1px);
-  }
-  100% {
-    transform: translateY(0);
-  }
+  0% { transform: translateY(0); }
+  25% { transform: translateY(1.3px); }
+  50% { transform: translateY(0); }
+  75% { transform: translateY(1px); }
+  100% { transform: translateY(0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
